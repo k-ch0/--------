@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Favorites</title>
+    <style>
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            color: #e50914;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        li {
+            margin: 10px;
+            width: calc(50% - 20px);
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        form {
+            display: inline;
+        }
+
+        input[type="submit"], a.button {
+            background-color: #e50914;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover, a.button:hover {
+            background-color: #c40612;
+        }
+
+        a {
+            color: #e50914;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <h2>Your Favorites:</h2>
+    <form method="POST" action="{{ url_for('favorites') }}">
+        <ul>
+        {% for favorite, image in favorites %}
+            <li>
+                <img src="{{ image }}" alt="{{ favorite }}">
+                <input type="checkbox" name="movie[]" value="{{ favorite }}">
+                <p>{{ favorite }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+        <input type="submit" name="delete" value="Delete Selected">
+    </form>
+    <a class="button" href="{{ url_for('logout') }}">Logout</a>
+    <a class="button" href="{{ url_for('index') }}">Go back</a>
+</body>
+</html>

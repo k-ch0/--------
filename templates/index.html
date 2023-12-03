@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Recommender</title>
+    <style>
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            color: #e50914;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 50px auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        li {
+            margin: 10px;
+            width: calc(50% - 20px); /* 2개의 열을 생성하기 위해 50%로 설정 */
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        input[type="submit"] {
+            background-color: #e50914;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .link-box {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        
+        a {
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            padding: 15px 32px;
+            margin: 4px 2px;
+            border-radius: 8px;
+            background-color: #e50914;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #c40612;
+        }
+
+        a.logout {
+            background-color: #f0ad4e;
+        }
+
+        a.logout:hover {
+            background-color: #d89c3a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <form method="POST" action="{{ url_for('recommend') }}">
+        <label for="movie">Enter a movie name:</label>
+        <input type="text" id="movie" name="movie">
+        <input type="submit" value="Find Similar Movies">
+    </form>
+    {% if similar_movies %}
+        <form method="POST" action="{{ url_for('favorites') }}">
+            <h2>Similar movies:</h2>
+            <ul>
+            {% for movie, image in similar_movies %}
+                <li>
+                    <img src="{{ image }}" alt="{{ movie }}">
+                    <input type="checkbox" name="movie[]" value="{{ movie }}">
+                    <p>{{ movie }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+            <input type="submit" value="Add to Favorites">
+        </form>
+    {% endif %}
+    <div class="link-box">
+        <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('favorites') }}">Go to Favorites</a>
+    </div>
+</body>
+</html>
