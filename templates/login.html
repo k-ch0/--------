@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +31,13 @@
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 16px;
             box-sizing: border-box;
+            border: none;
+            border-radius: 4px;
+            background-color: #1f1f1f;
+            color: white;
         }
 
         input[type="submit"] {
@@ -47,11 +51,23 @@
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 50px; /* 버튼 모서리를 둥글게 */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c40612;
+            transform: scale(1.05); /* 호버 시 버튼 크기를 약간 키움 */
         }
 
         a {
             color: #e50914;
             text-decoration: none;
+        }
+
+        .register-link {
+            display: block;
+            margin-top: 10px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -69,12 +85,12 @@
 <body>
     <h1 style="margin-top: 50px;">로그인</h1>
     <form method="POST">
-        <label for="username">ID:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <input type="submit" value="Login">
+        <label for="username">아이디:</label>
+        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요">
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+        <input type="submit" value="로그인">
     </form>
-    <a href="/register">회원가입</a>
+    <a href="/register" class="register-link">회원가입</a>
 </body>
 </html>

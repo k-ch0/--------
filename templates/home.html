@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
         .big {
             font-size: 2.5em;
             display: inline;
+            color: #e50914;
         }
 
         .small {
@@ -27,6 +28,7 @@
             max-width: 600px;
             margin: auto;
             line-height: 1.6;
+            color: #ccc;
         }
 
         a {
@@ -40,14 +42,20 @@
             text-decoration: none;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 50px; /* 버튼 모서리를 둥글게 */
         }
 
+        a:hover {
+            background-color: #c40612;
+            transform: scale(1.05); /* 호버 시 버튼 크기를 약간 키움 */
+        }
         
     </style>
 </head>
 <body>
     <h1><span class="big">어</span><span class="small">떤 </span><span class="big">영</span><span class="small">화를 </span><span class="big">원</span><span class="small">해?</span></h1>
-    <p>어영원은 영화 추천을 받을 수 있는 웹사이트입니다. </p>
+    <p>어영원은 장르를 기반으로 영화를 추천을 받을 수 있는 웹사이트입니다. </p>
     <p>회원가입 후 로그인하면, 개인 취향에 맞는 영화를 추천받을 수 있습니다.</p>
     <p>영화명을 영어로 입력해야 추천받을 수 있습니다.</p>
     <p>회원가입을 하여 추천받은 영화를 찜 목록에 저장해보세요!</p>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
     <style>
         body {
             background-color: #141414;
@@ -29,9 +31,13 @@
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 16px;
             box-sizing: border-box;
+            border: none;
+            border-radius: 4px;
+            background-color: #1f1f1f;
+            color: white;
         }
 
         input[type="submit"] {
@@ -45,6 +51,13 @@
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 50px; /* 버튼 모서리를 둥글게 */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c40612;
+            transform: scale(1.05); /* 호버 시 버튼 크기를 약간 키움 */
         }
 
         a {
@@ -62,18 +75,18 @@
 <body>
     <h1 style="margin-top: 50px;">회원가입</h1>
     <form method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-        <label for="username">ID:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password">
-        <label for="birthdate">Birthdate:</label>
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+        <label for="username">아이디:</label>
+        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요">
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+        <label for="confirm_password">비밀번호 확인:</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="비밀번호를 한 번 더 입력하세요">
+        <label for="birthdate">생년월일:</label>
         <input type="date" id="birthdate" name="birthdate">
-        <input type="submit" value="Register">
+        <input type="submit" value="회원가입">
     </form>
-    <a href="{{ url_for('login') }}">이미 회원이십니까? 로그인</a>
+    <a href="{{ url_for('login') }}">이미 회원이신가요? 로그인</a>
 </body>
 </html>

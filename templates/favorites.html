@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Favorites</title>
     <style>
         body {
@@ -32,6 +34,7 @@
         img {
             width: 100%;
             height: auto;
+            border-radius: 4px;
         }
 
         form {
@@ -49,35 +52,63 @@
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 50px; /* 버튼 모서리를 둥글게 */
         }
 
         input[type="submit"]:hover, a.button:hover {
             background-color: #c40612;
+            transform: scale(1.05); /* 호버 시 버튼 크기를 약간 키움 */
         }
 
         a {
             color: #e50914;
             text-decoration: none;
         }
+
+        /* 커스텀 체크박스 */
+        input[type="checkbox"] {
+            display: none; /* 기존 체크박스 숨기기 */
+        }
+
+        input[type="checkbox"] + label {
+            position: relative;
+            padding-left: 30px; /* 체크박스 이미지 공간 확보 */
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e50914; /* 체크박스 테두리 색 */
+            border-radius: 3px; /* 체크박스 모서리 둥글게 */
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            background: #e50914 url(images/check-icon.png) no-repeat center center; /* 체크된 상태 이미지. 경로는 필요에 따라 수정 */
+        }
     </style>
 </head>
 <body>
     <h1>Welcome, {{ username }}!</h1>
-    <h2>Your Favorites:</h2>
+    <h2>찜 목록:</h2>
     <form method="POST" action="{{ url_for('favorites') }}">
         <ul>
         {% for favorite, image in favorites %}
             <li>
                 <img src="{{ image }}" alt="{{ favorite }}">
-                <input type="checkbox" name="movie[]" value="{{ favorite }}">
-                <p>{{ favorite }}</p>
+                <input type="checkbox" id="{{ favorite }}" name="movie[]" value="{{ favorite }}">
+                <label for="{{ favorite }}">{{ favorite }}</label> <!-- 라벨 추가 -->
             </li>
         {% endfor %}
         </ul>
-        <input type="submit" name="delete" value="Delete Selected">
+        <input type="submit" name="delete" value="선택 삭제">
     </form>
-    <a class="button" href="{{ url_for('logout') }}">Logout</a>
-    <a class="button" href="{{ url_for('index') }}">Go back</a>
+    <a class="button" href="{{ url_for('logout') }}">로그아웃</a>
+    <a class="button" href="{{ url_for('index') }}">뒤로 가기</a>
 </body>
 </html>
