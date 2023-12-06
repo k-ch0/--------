@@ -29,23 +29,35 @@ def get_user(username):
     connection.close()
     return user
 
+# 사용자가 입력한 영화 제목을 기반으로 유사한 장르의 영화를 찾는 함수 정의
+# Term Frequency-Inverse Document Frequency
+# 자연어 처리에서 텍스트 데이터를 수치화하는 데 사용되는 방법 중 하나
 def get_similar_movies(movie_title):
     connection = connect_to_oracle()
     cursor = connection.cursor()
+    # 모든 영화의 제목과 장르를 선택하는 SQL 쿼리 작성
     sql = "SELECT TITLE, GENRE FROM MOVIE"
     cursor.execute(sql)
     movies = cursor.fetchall()
     cursor.close()
     connection.close()
+    # 가져온 결과에서 영화 제목을 추출하여 리스트로 저장
     movie_titles = [movie[0] for movie in movies]
+    # 가져온 결과에서 영화 장르를 추출하여 리스트로 저장. 장르 정보가 없는 경우 빈 문자열로 처리
     movie_genres = [movie[1] if movie[1] is not None else '' for movie in movies]
     try:
         vectorizer = TfidfVectorizer()
+        # 영화 장르를 TF-IDF 벡터로 변환
         movie_vectors = vectorizer.fit_transform(movie_genres)
+        # 사용자가 입력한 영화 제목의 인덱스를 찾음
         movie_index = movie_titles.index(movie_title)
+        # 해당 영화의 TF-IDF 벡터를 가져옴
         movie_vector = movie_vectors[movie_index]
+        # 코사인 유사도를 사용하여 입력 영화와 다른 모든 영화와의 유사도를 계산
         cosine_similarities = cosine_similarity(movie_vector, movie_vectors).flatten()
+        # 계산된 유사도를 기준으로 상위 10개 영화의 인덱스를 가져옴
         similar_movie_indices = cosine_similarities.argsort()[::-1][1:11]
+        # 상위 10개 영화의 제목을 반환
         return [movie_titles[i] for i in similar_movie_indices]
     except Exception as e:
         print(f"Error in get_similar_movies: {e}")
